@@ -1,0 +1,53 @@
+{
+  "site": {
+    "title": "Geeky Nextjs",
+    "base_url": "/",
+    "favicon": "/images/favicon.png",
+    "logo": "/images/logo.png",
+    "logo_white": "/images/logo-light.png",
+    "logo_width": "80",
+    "logo_height": "60",
+    "logo_text": "Geeky"
+  },
+  "settings": {
+    "theme_switcher": true,
+    "default_theme": "system",
+    "pagination": 6,
+    "InnerPaginationOptions": {
+      "enableTop": false,
+      "enableBottom": true
+    },
+    "summary_length": 200,
+    "blog_folder": "posts"
+  },
+  "params": {
+    "tag_manager_id": "",
+    "footer_content": "We appreciate you choosing our service and we strive to make your experience exceptional. If you ever need to purchase tickets again, we would be honored to have your business. Thank you for trusting us with your ticketing needs.",
+    "copyright": "Designed and Developed By [Peerapon Chaijittiprasert](https://my-website-for-portfolio.netlify.app/)"
+  },
+  "metadata": {
+    "meta_author": "Peerapon Chaijittiprasert",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "Nextjs Ticket Reservation"
+  },
+  "widgets": {
+    "about": {
+      "enable": true,
+      "content": "You can contact and follow my various works through social media. I am more than happy to respond to all useful and interesting comments."
+    },
+    "most_sale_tickets": {
+      "enable": true,
+      "title": "Ticket Categories",
+      "showPost": 3
+    },
+    "categories": {
+      "enable": true,
+      "title": "Ticket Categories"
+    }
+  },
+  "disqus": {
+    "enable": true,
+    "shortname": "themefisher-template",
+    "settings": {}
+  }
+}
