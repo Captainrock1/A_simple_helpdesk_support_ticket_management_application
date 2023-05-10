@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <title>WeTicket || Register Menu for My Tickets System</title>
+      <%- include('./include/head'); %>
+  </head>
+  
+<body class="bodyimg">
+    <div class="backgroundcolor" align="center">
+        <% if(message.length > 0) { %>
+            <div class="alert alert-danger">
+                <%= message %>
+            </div>
+            <% } %>
+        <div class="gridspace1">
+            <div class="left-grid">
+                <p class="note" style="margin-left: 25px; margin-top: 90px; width: 300px; padding: 10px;" align="left"> 
+                    Note: Username and email must not have been used for registration on the website system before,
+                    and the password must be at least 8 characters long, consisting of at least 1 uppercase letter, 
+                    1 lowercase letter, and 1 number, with only English letters and numbers.
+                </p>
+                <img src="/images/image1.jpg" style="width: 250px; height: 140px; margin-top: 20px; margin-left: 50px;">
+            </div>
+            <div class="mid-grid">
+                <div class="vl" style="height: 355px;"></div>
+            </div>
+            <div class="right-grid" align="left">
+                <div class="H1" align="left"><br>Register Menu for My Tickets System</div><p></p><br>
+                <form method="POST" action="/register" novalidate>
+                    <!--input username-->
+                    <input type="text" class="btn" placeholder="Username" name="username" id="username" value="<%= (locals.old_data) ? old_data.username : ''; %>" maxlength="30" required>
+                    <p></p>
+                    <!--input email-->
+                    <input type="email" class="btn" placeholder="Email" name="email" id="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" value="<%= (locals.old_data) ? old_data.email : ''; %>" maxlength="40" required>
+                    <p></p>
+                    <!--input password-->
+                    <input type="password" class="btn" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Password" name="password" id="password" required>
+                    <p></p>
+                    <!--input phone-->
+                    <input type="tel" class="btn" name="phone" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="081-xxx-xxxx" required>
+                    <p></p>
+                    <!--เรียกใช้ฟังก์ชั่น Login ยังไม่ได้ทำ-->
+                    <button type="submit" class="submitbtn" name="submit_button" id="submit_button" value="Register">Register</button>
+                </form><p></p>
+                <div class="gridspace4">
+                    <div class="left-grid">
+                        <a href="/" class="H2">Login</a>
+                    </div>
+                </div>
+                <br>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

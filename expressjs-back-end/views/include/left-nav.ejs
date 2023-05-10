@@ -1,0 +1,11 @@
+<div class="left-grid">
+    <div class="box2" align="left">
+    <br>
+    &nbsp;&nbsp;&nbsp;<a href="/"><i class="fa-solid fa-list" style="color: black;"></i>&nbsp;&nbsp;<span>Ticket List</span></a><p></p>
+    &nbsp;&nbsp;&nbsp;<a href="/new_ticket"><i class="fa-solid fa-ticket" style="color: black;"></i>&nbsp;&nbsp;<span>Create New Ticket</span></a><p></p>
+    &nbsp;&nbsp;&nbsp;<a href="/logout"><i class="fa-solid fa-right-from-bracket" style="color: black;"></i>&nbsp;&nbsp;<span>Logout</span></a><p></p>
+    <% if(role == 'admin') { %>
+    &nbsp;&nbsp;&nbsp;<a href="/setting"><i class="fa-solid fa-file-pen" style="color: black;"></i>&nbsp;&nbsp;<span>Update Ticket Status</span></a><p></p>
+    <% } %>
+    </div>
+</div>

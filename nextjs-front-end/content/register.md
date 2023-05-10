@@ -21,6 +21,4 @@ draft: false
     <span style={{ marginTop: '10px' }}>[Already have an account?](./tickets)</span>
   </div>
 </div>
-
-
 ---

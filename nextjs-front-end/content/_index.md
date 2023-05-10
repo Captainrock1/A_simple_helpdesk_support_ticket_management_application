@@ -13,7 +13,7 @@ banner:
   button1:
     enable: true
     label:  Create Ticket
-    link: /tickets
+    link: http://localhost:5000/
     rel: ""
   
   

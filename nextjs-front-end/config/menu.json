@@ -10,7 +10,7 @@
     },
     {
       "name": "My Tickets",
-      "url": "/tickets/"
+      "url": "http://localhost:5000"
     },
     {
       "name": "Contact",

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <title>WebETkd || Webboard Management</title>
+      <%- include('./include/index-head'); %>
+  </head>
+  
+  <body class="bodycolor">
+    <%- include('./include/top-nav'); %>
+    <div class="gridspace">
+        <%- include('./include/left-nav'); %>
+        <div class="mid-grid">
+            <div class="box3" align="center">
+                <div class="box4" align="center">
+                    <% if(action == 'create_ticket') { %>
+                        <div class="box5" align="center" style="background-color: #fff;">
+                            <div class="Heading2" align="left" style="color: #0A53C0;">My Tickets System</div>
+                        </div>
+                        <div class="box5" align="center">
+                            <div class="Heading2" align="left">Create New Ticket</div>
+                        </div>
+                        <div class="gridspace4">
+                        <form action="/create_ticket" method="POST">
+                            <div class="bottom-grid" style="border-left: 1px solid #2C3333; border-right: 1px solid #2C3333;">
+                                <div class="content2" align="left" style="border-bottom: 1px solid #2C3333; border-top: 1px solid #2C3333; padding: 5px;">
+                                    Title
+                                </div>
+                                <div class="content1" align="center" style="border-bottom: 1px solid #2C3333; padding: 5px;">
+                                    <input type="text" class="btn1" name="ticketTitle" id="ticketTitle" style="padding: 5px;" placeholder="โปรดระบุหัวข้อ *พิมพ์ข้อความได้ไม่เกิน 30 ตัวอักษร" maxlength="30" required>
+                                </div>
+                                <div class="content2" align="left" style="border-bottom: 1px solid #2C3333; padding: 5px;">
+                                    Description
+                                </div>
+                                <div class="content1" align="center" style="padding: 5px; border-bottom: 1px solid #2C3333;">
+                                    <textarea class="btn1" style="height: 290px;" name="ticketDescription" id="ticketDescription" placeholder="โปรดระบุเนื้อหาโดยสังเขป *พิมพ์ข้อความได้ไม่เกิน 100 ตัวอักษร" maxlength="100" required></textarea>
+                                    <div align="left" style="padding-bottom: 5px;">
+                                        <button type="submit" class="publishbtn" style="color: #1C7B31; margin-left: 35px; margin-top: 16px;" value="Submit">Submit</button><button type="reset" class="publishbtn" style="color: #E10520; margin-left: 20px; margin-top: 16px;">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    <% } else if(action == 'my_inventory') { %>
+
+                    <% } else { %>
+                        <div class="box5" align="center" style="background-color: #fff;">
+                            <div class="Heading2" align="left" style="color: #0A53C0;">My Tickets System</div>
+                        </div>
+                        <div class="box5" align="center">
+                            <div class="Heading2" align="left">Ticket List</div>
+                        </div>
+                        <table id="box6" align="left" style="margin-bottom: 15px;">
+                            <tr>
+                              <th>No.</th>
+                              <th>Title</th>
+                              <th>Description</th>
+                              <th>Created By Date</th>
+                              <th>Latest Update Date</th>
+                              <th>Status</th>
+                            </tr>
+                            <% if(tickets.length === 0) { %>
+                            
+                            <% } else {
+                                for(let i = 0; i < tickets.length; i++) { %>
+                                    <tr>
+                                        <td><%= i+1 %></td>
+                                        <td><%= tickets[i].title %></td>
+                                        <td><%= tickets[i].description %></td>
+                                        <td><%= tickets[i].created_by_date %></td>
+                                        <td><%= status[i].latest_update_date %></td>
+                                        <td><%= status[i].status %></td>
+                                    </tr>
+                                <% } 
+                            } %>
+                        </table>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

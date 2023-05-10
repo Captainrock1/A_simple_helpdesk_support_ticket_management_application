@@ -8,7 +8,7 @@ import { markdownify } from "@lib/utils/textConverter";
 import Link from "next/link";
 
 const Footer = () => {
-  const { copyright, footer_content } = config.params;
+  const { original, copyright, footer_content } = config.params;
   return (
     <footer className="section relative mt-12 pt-[70px] pb-[50px]">
       <ImageFallback
@@ -42,6 +42,8 @@ const Footer = () => {
         </div>
         {/* copyright */}
         {markdownify(copyright, "p")}
+        {/* original */}
+        {markdownify(original, "p")}
       </div>
     </footer>
   );
