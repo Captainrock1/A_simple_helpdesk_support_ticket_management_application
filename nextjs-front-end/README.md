@@ -1,23 +1,5 @@
-<h1 align=center>Geeky Nextjs</h1>
-<p align=center>Geeky is a free NextJs personal blog template</p>
-<h2 align="center"> <a target="_blank" href="https://geeky-nextjs.vercel.app/" rel="nofollow">Demo</a> | <a  target="_blank" href="https://pagespeed.web.dev/report?url=https%3A%2F%2Fgeeky-nextjs.vercel.app%2F&form_factor=desktop">Page Speed (100%)</a>
-</h2>
-
-<p align=center>
-  <a href="https://github.com/vercel/next.js/releases/tag/v13.0.6" alt="Contributors">
-    <img src="https://img.shields.io/static/v1?label=NEXTJS&message=13.0&color=000&logo=nextjs" />
-  </a>
-
-  <a href="https://github.com/statichunt/geeky-nextjs/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/statichunt/geeky-nextjs" alt="license"></a>
-
-  <img src="https://img.shields.io/github/languages/code-size/statichunt/geeky-nextjs" alt="code size">
-
-  <a href="https://github.com/statichunt/geeky-nextjs/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/statichunt/geeky-nextjs" alt="contributors"></a>
-</p>
-
-![geeky](https://statichunt.com/themes/nextjs-geeky.png)
+<h1 align=center>Nextjs Front-End</h1>
+<p align=center>This website template is modified from a free NextJs personal blog template</p>
 
 ## Key Features
 
