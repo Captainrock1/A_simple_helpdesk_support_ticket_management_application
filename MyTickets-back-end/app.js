@@ -16,7 +16,7 @@ var app = express();
 
 //set port
 var corsOptions = {
-  origin: "http://localhost:8082",
+  origin: "http://localhost:8080",
 };
 app.use(cors(corsOptions));
 

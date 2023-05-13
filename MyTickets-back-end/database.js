@@ -3,7 +3,7 @@ const mysql = require('mysql2');
 var connection = mysql.createPool({
     host: 'localhost', // MYSQL HOST NAME
     user: 'root', // MYSQL USERNAME
-    port: 3308, // NEW PORT NUMBER
+    port: 3306, // NEW PORT NUMBER
     password: '', // MYSQL PASSWORD
     database: 'weticket', // MYSQL DB NAME
     namedPlaceholders: true, // set at the connection level

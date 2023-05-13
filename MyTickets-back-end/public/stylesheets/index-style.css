@@ -189,6 +189,20 @@
   background: #D9D9D9;
   border: 1px solid #7D7D7D;
 }
+
+.rolebtn{
+  min-width: 300px;
+  width: 30%;
+  height: 30%;
+  border: 1px solid#000000;
+  background: #D9D9D9;
+  border-radius: 30px;
+  padding: 2px;
+  cursor: pointer;
+  margin: auto; 
+  font-family: "Barlow";
+  font-weight: bold;
+}
 .dropdown {
   position: relative;
   display: inline-block;
@@ -346,6 +360,13 @@ input[type="file"] {
   'top'
   'bottom';
   margin: 10px;
+}
+.gridspace5{
+  display: grid;
+  grid-template-columns: 300px auto 300px;
+  grid-template-rows: auto;
+  grid-template-areas: 
+  'left mid right';
 }
 .top-grid{
   grid-area: top;

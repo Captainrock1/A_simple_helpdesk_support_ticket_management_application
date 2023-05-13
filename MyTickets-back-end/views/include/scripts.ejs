@@ -1,0 +1,18 @@
+<script>
+    // Get the dropdown menu and the status button
+    var dropdown = document.getElementById("myDropdown");
+    var statusButton = document.getElementById("status");
+  
+    // When the user clicks the status button, show the dropdown menu
+    statusButton.onclick = function() {
+      dropdown.classList.toggle("show");
+    }
+  
+    // When the user selects a status, set the value of the status button and hide the dropdown menu
+    function setStatus(status) {
+      statusButton.value = status;
+      dropdown.classList.remove("show");
+    }
+
+  </script>
+  

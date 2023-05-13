@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <title>WebETkd || Webboard Management</title>
+      <%- include('./include/index-head'); %>
+  </head>
+  
+  <body class="bodycolor">
+    <%- include('./include/top-nav'); %>
+    <div class="gridspace">
+        <%- include('./include/left-nav'); %>
+        <div class="mid-grid">
+            <div class="box3" align="center">
+                <div class="box4" align="center">
+                    <% if(action == 'create_ticket') { %>
+                        <div class="box5" align="center" style="background-color: #fff;">
+                            <div class="Heading2" align="left" style="color: #0A53C0;">My Tickets System</div>
+                        </div>
+                        <div class="box5" align="center">
+                            <div class="Heading2" align="left">Create New Ticket</div>
+                        </div>
+                        <div class="gridspace4">
+                        <form action="/create_ticket" method="POST">
+                            <div class="bottom-grid" style="border-left: 1px solid #2C3333; border-right: 1px solid #2C3333;">
+                                <div class="content2" align="left" style="border-bottom: 1px solid #2C3333; border-top: 1px solid #2C3333; padding: 5px;">
+                                    Title
+                                </div>
+                                <div class="content1" align="center" style="border-bottom: 1px solid #2C3333; padding: 5px;">
+                                    <input type="text" class="btn1" name="ticketTitle" id="ticketTitle" style="padding: 5px;" placeholder="โปรดระบุหัวข้อ *พิมพ์ข้อความได้ไม่เกิน 30 ตัวอักษร" maxlength="30" required>
+                                </div>
+                                <div class="content2" align="left" style="border-bottom: 1px solid #2C3333; padding: 5px;">
+                                    Description
+                                </div>
+                                <div class="content1" align="center" style="padding: 5px; border-bottom: 1px solid #2C3333;">
+                                    <textarea class="btn1" style="height: 290px;" name="ticketDescription" id="ticketDescription" placeholder="โปรดระบุเนื้อหาโดยสังเขป *พิมพ์ข้อความได้ไม่เกิน 100 ตัวอักษร" maxlength="100" required></textarea>
+                                    <div align="left" style="padding-bottom: 5px;">
+                                        <button type="submit" class="publishbtn" style="color: #1C7B31; margin-left: 35px; margin-top: 16px;" value="Submit">Submit</button><button type="reset" class="publishbtn" style="color: #E10520; margin-left: 20px; margin-top: 16px;">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    <% } else if(action == 'setting') { %>
+                        <div class="box5" align="center" style="background-color: #fff;">
+                            <div class="Heading2" align="left" style="color: #0A53C0;">My Tickets System</div>
+                        </div>
+                        <div class="box5" align="center">
+                            <div class="Heading2" align="left">Ticket List</div>
+                        </div>
+                        <table id="box6" align="left" style="margin-bottom: 15px;">
+                            <tr>
+                                <th>No.</th>
+                                <th>Ticket Title</th>
+                                <th>Contact Information</th>
+                                <th>Ticket Status</th>
+                                <th>Edit</th>
+                            </tr>
+                            <% if(tickets.length === 0) { %>
+                            <% } else {
+                                for(let i = 0; i < tickets.length; i++) { %>
+                                    <tr>
+                                        <td><%= i+1 %></td>
+                                        <td><%= tickets[i].title %></td>
+                                        <td>
+                                            Owner: <%= tickets[i].username %><br>
+                                            Email: <%= tickets[i].email %><br>
+                                            Phone: <%= tickets[i].phone %>
+                                        </td>
+                                        <td><%= tickets[i].status %></td>
+                                        <td>
+                                            <a href="/edit_ticket/<%= tickets[i].ticketID %>">&nbsp;&nbsp;&nbsp;<button class="fa-solid fa-pen-to-square fa-sm" style="width: 30px; height: 30px; color: black; background-color: white;"></button></a>
+                                        </td>
+                                    </tr>
+                            <% }
+                            } %>
+                        </table>
+                    <% } else if(action == 'update_status') { %>
+                        <div class="box5" align="center" style="background-color: #fff;">
+                            <div class="Heading2" align="left" style="color: #0A53C0;">My Tickets System</div>
+                        </div>
+                        <div class="box5" align="center">
+                            <div class="Heading2" align="left">Ticket No. <%= ticket.ticketID %></div>
+                        </div>
+                        <table id="box6" align="left" style="margin-bottom: 15px;">
+                            <tr>
+                                <th>Ticket Title</th>
+                                <th>Contact Information</th>
+                                <th>Ticket Status</th>
+                                <th>Confirm</th>
+                                <th>Cancel</th>
+                            </tr>
+                            <% if(ticket.length === 0) { %>
+                            <% } else { %>
+                                    <% 
+                                    var status = ticket.status;
+                                    if(ticket.status == 'pending') {
+                                        status = 'pending';
+                                    } else if(ticket.status == 'accepted') {
+                                        status = 'accepted';
+                                    } else if(ticket.status == 'resolved') {
+                                        status = 'resolved';
+                                    } else if(ticket.status == 'rejected') {
+                                        status = 'rejected';
+                                    } 
+                                    %>
+                                            <tr>
+                                                <form method="POST" action="/update_status/<%= ticket.ticketID %>">
+                                                <td><%= ticket.title %></td>
+                                                <td>
+                                                    Owner: <%= ticket.username %><br>
+                                                    Email: <%= ticket.email %><br>
+                                                    Phone: <%= ticket.phone %>
+                                                </td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <div id="myDropdown" class="dropdown-content" style="background-color: #507bbc;">
+                                                                <div type="button" onclick="setStatus('pending')" class="rolebtn" style="text-align:center;">pending</div>
+                                                                <div type="button" onclick="setStatus('accepted')" class="rolebtn" style="text-align:center;">accepted</div>
+                                                                <div type="button" onclick="setStatus('resolved')" class="rolebtn" style="text-align:center;">resolved</div>
+                                                                <div type="button" onclick="setStatus('rejected')" class="rolebtn" style="text-align:center;">rejected</div>
+                                                            </div>
+                                                            <input type="text" id="status" name="status" class="rolebtn" value="<%= status %>" style="text-align:center;">
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button type="submit" class="fa-solid fa-check fa-sm" style="width: 30px; height: 30px; color: green; background-color: white;"></button>
+                                                    </td>
+                                                </form>
+                                                <td><a href="/setting"><button class="fa-solid fa-xmark fa-sm" style="width: 30px; height: 30px; color: red; background-color: white;"></button></a></td>
+                                            </tr>
+                            <% } %>
+                        </table>
+                    <% } else { %>
+                        <div class="box5" align="center" style="background-color: #fff;">
+                            <div class="Heading2" align="left" style="color: #0A53C0;">My Tickets System</div>
+                        </div>
+                        <div class="box5" align="center">
+                            <div class="gridspace5">
+                                <div class="left-grid">
+                                    <div class="Heading2" align="left">Ticket List</div>
+                                </div>
+                                <div class="right-grid">
+                                    <form method="POST" action="/filter-by-status" align="right">
+                                        <select name="status" id="status">
+                                            <option value="">All Statuses</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="accepted">Accepted</option>
+                                            <option value="resolved">Resolved</option>
+                                            <option value="rejected">Rejected</option>
+                                        </select>
+                                        <button type="submit">Filter</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="box6" align="left" style="margin-bottom: 15px;">
+                            <tr>
+                              <th>No.</th>
+                              <th>Ticket Title</th>
+                              <th>Description</th>
+                              <th>Contact Information</th>
+                              <th>Ticket Date</th>
+                              <th>Ticket Status</th>
+                            </tr>
+                            <% if(ticketList.length === 0) { %>
+                                <tr>
+                                    <td colspan="6">No tickets found.</td>
+                                </tr>
+                            <% } else {
+                                for(let i = 0; i < ticketList.length; i++) { %>
+                                    <tr>
+                                        <td><%= i+1 %></td>
+                                        <td><%= ticketList[i].title %></td>
+                                        <td><%= ticketList[i].description %></td>
+                                        <td>
+                                            Owner: <%= ticketList[i].username %><br>
+                                            Email: <%= ticketList[i].email %><br>
+                                            Phone: <%= ticketList[i].phone %>
+                                        </td>
+                                        <td>
+                                        <%   
+                                            var cr_year = ticketList[i].created_by_date.toLocaleString("default", { year: "numeric" });
+                                            var cr_month = ticketList[i].created_by_date.toLocaleString("default", { month: "2-digit" });
+                                            if(cr_month.length != 2) {
+                                                cr_month = "0" + cr_month;
+                                            }
+                                            var cr_day = ticketList[i].created_by_date.toLocaleString("default", { day: "2-digit" });
+                                            if(cr_day.length != 2) {
+                                                cr_day = "0" + cr_day;
+                                            }
+                                            var cr_time = ticketList[i].created_by_date.toLocaleTimeString('en-US', {hour12: false});
+                                            var createdDate = cr_year + "-" + cr_month + "-" + cr_day + " " + cr_time;
+
+                                            var up_year = ticketList[i].latest_update_date.toLocaleString("default", { year: "numeric" });
+                                            var up_month = ticketList[i].latest_update_date.toLocaleString("default", { month: "2-digit" });
+                                            if(up_month.length != 2) {
+                                                up_month = "0" + up_month;
+                                            }
+                                            var up_day = ticketList[i].latest_update_date.toLocaleString("default", { day: "2-digit" });
+                                            if(up_day.length != 2) {
+                                                up_day = "0" + up_day;
+                                            }
+                                            var up_time = ticketList[i].latest_update_date.toLocaleTimeString('en-US', {hour12: false});
+                                            var updatedDate = up_year + "-" + up_month + "-" + up_day + " " + up_time;
+                                        %>
+                                            Created: <%= createdDate %><br>
+                                            Updated:<%= updatedDate %>
+                                        </td>
+                                        <td><%= ticketList[i].status %></td>
+                                    </tr>
+                                <% } 
+                            } %>
+                        </table>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include('./include/scripts'); %>
+</html>

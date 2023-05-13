@@ -1,13 +1,13 @@
 {
   "site": {
-    "title": "Geeky Nextjs",
+    "title": "WeTicket",
     "base_url": "/",
     "favicon": "/images/favicon.png",
     "logo": "/images/logo.png",
-    "logo_white": "/images/logo-light.png",
+    "logo_white": "/images/logo-light.svg",
     "logo_width": "80",
     "logo_height": "60",
-    "logo_text": "Geeky"
+    "logo_text": "WeTicket"
   },
   "settings": {
     "theme_switcher": true,
@@ -23,8 +23,7 @@
   "params": {
     "tag_manager_id": "",
     "footer_content": "We appreciate you choosing our service and we strive to make your experience exceptional. If you ever need to purchase tickets again, we would be honored to have your business. Thank you for trusting us with your ticketing needs.",
-    "copyright": "Designed and Developed By [Peerapon Chaijittiprasert](https://my-website-for-portfolio.netlify.app/)",
-    "original": "Original Template Copyright (c) 2019 By [statichunt](https://statichunt.com)"
+    "copyright": "Designed and Developed By [Peerapon Chaijittiprasert](https://my-website-for-portfolio.netlify.app/)"
   },
   "metadata": {
     "meta_author": "Peerapon Chaijittiprasert",

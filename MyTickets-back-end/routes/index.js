@@ -28,33 +28,31 @@ const ifLoggedin = (req, res, next) => {
 router.get('/', ifNotLoggedin, (req,res,next) => {
     database.execute('SELECT `username`,`role` FROM `user_data` WHERE userID = ?', [req.session.userID])
     .then(([rows]) => {
-        const newTicketQuery = 'SELECT * FROM ticket_data ORDER BY created_by_date DESC';
-        database.execute(newTicketQuery)
-          .then(([newTicketResults]) => {
-            const ticketID = newTicketResults.ticketID;
-            console.log(ticketID);
-            const statusTicketQuery = 'SELECT * FROM ticket_status ORDER BY ticketID DESC';
-            database.execute(statusTicketQuery, ticketID)
-              .then(([statusTicketResults]) => {
-                res.render('home', {
-                  username: rows[0].username,
-                  role: rows[0].role,
-                  action: 'list',
-                  tickets: newTicketResults,
-                  status: statusTicketResults,
-                });
-              })
-              .catch((err) => {
-                if (err) {
-                  res.redirect('/');
-                  console.log(err);
-                }
-              });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        
+      const listTicketQuery =
+      `SELECT ticket_data.ticketID,
+              user_data.userID,
+              ticket_data.title,
+              ticket_data.description,
+              ticket_data.created_by_date,
+              ticket_status.statusID,
+              ticket_status.status,
+              ticket_status.latest_update_date,
+              user_data.username,
+              user_data.email,
+              user_data.phone
+      FROM ticket_data
+      JOIN ticket_status ON ticket_data.ticketID = ticket_status.ticketID
+      JOIN user_data ON ticket_data.contactID = user_data.userID
+      ORDER BY ticket_status.latest_update_date ASC`;
+      database.execute(listTicketQuery)
+      .then(([listTicketResults]) => {
+        res.render('home', {
+          username: rows[0].username,
+          role: rows[0].role,
+          action: 'list',
+          ticketList: listTicketResults
+        });
+      });
     });
 });// END OF ROOT PAGE
 
@@ -96,6 +94,126 @@ router.get('/new_ticket', ifNotLoggedin, (req,res,next) => {
                 });
             });   
         });
+    });
+  });
+
+  router.get('/setting', ifNotLoggedin, (req,res,next) => {
+    database.execute('SELECT `username`,`role` FROM `user_data` WHERE userID = ?', [req.session.userID])
+    .then(([rows]) => {
+    const allSelectQuery =
+      `SELECT ticket_data.ticketID,
+              user_data.userID,
+              ticket_data.title,
+              ticket_data.description,
+              ticket_data.created_by_date,
+              ticket_status.statusID,
+              ticket_status.status,
+              ticket_status.latest_update_date,
+              user_data.username,
+              user_data.email,
+              user_data.phone
+      FROM ticket_data
+      JOIN ticket_status ON ticket_data.ticketID = ticket_status.ticketID
+      JOIN user_data ON ticket_data.contactID = user_data.userID
+      ORDER BY ticket_data.created_by_date ASC`;
+      database.execute(allSelectQuery).then(([results]) => {
+        res.render('home', {
+          username: rows[0].username,
+          role: rows[0].role,
+          tickets: results,
+          action: 'setting'
+        });
+      });
+    });
+  });
+
+  router.get('/edit_ticket/:ticketID', ifNotLoggedin, (req,res,next) => {
+    database.execute('SELECT `username`,`role` FROM `user_data` WHERE userID = ?', [req.session.userID])
+    .then(([rows]) => {
+    const ticketID = req.params.ticketID;
+    const selectTicketQuery =
+      `SELECT ticket_data.ticketID,
+              user_data.userID,
+              ticket_data.title,
+              ticket_data.description,
+              ticket_data.created_by_date,
+              ticket_status.statusID,
+              ticket_status.status,
+              ticket_status.latest_update_date,
+              user_data.username,
+              user_data.email,
+              user_data.phone
+      FROM ticket_data
+      JOIN ticket_status ON ticket_data.ticketID = ticket_status.ticketID
+      JOIN user_data ON ticket_data.contactID = user_data.userID
+      WHERE ticket_data.ticketID = ${ticketID}`;
+      database.execute(selectTicketQuery).then(([results]) => {
+        res.render('home', {
+          username: rows[0].username,
+          role: rows[0].role,
+          ticket: results[0],
+          action: 'update_status'
+        });
+      });
+    });
+  });
+
+  router.post('/filter-by-status', ifNotLoggedin, (req,res,next) => {
+    database.execute('SELECT `username`,`role` FROM `user_data` WHERE userID = ?', [req.session.userID])
+    .then(([rows]) => {
+      const ticketStatus = req.body.status;
+      if (ticketStatus == "") {
+        res.redirect(`/`);
+      } else {
+        const filterTicketQuery =
+        `SELECT ticket_data.ticketID,
+                user_data.userID,
+                ticket_data.title,
+                ticket_data.description,
+                ticket_data.created_by_date,
+                ticket_status.statusID,
+                ticket_status.status,
+                ticket_status.latest_update_date,
+                user_data.username,
+                user_data.email,
+                user_data.phone
+        FROM ticket_data
+        JOIN ticket_status ON ticket_data.ticketID = ticket_status.ticketID
+        JOIN user_data ON ticket_data.contactID = user_data.userID
+        WHERE ticket_status.status = '${ticketStatus}' ORDER BY ticket_status.latest_update_date ASC`;
+        database.execute(filterTicketQuery)
+        .then(([filterTicketResults]) => {
+          res.render('home', {
+            username: rows[0].username,
+            role: rows[0].role,
+            action: 'filter_list',
+            ticketList: filterTicketResults
+          });
+        });
+      }
+    });
+  });
+
+  router.post('/update_status/:ticketID', ifNotLoggedin, (req,res,next) => {
+    const ticketID = req.params.ticketID;
+    var ticketStatus = req.body.status;
+    database.execute("SELECT `status` FROM `ticket_status` WHERE `ticketID`=?",[ticketID])
+    .then(([rows]) => {
+      if(ticketStatus == 'pending') { 
+        ticketStatus = 'pending';
+      } else if(ticketStatus == 'accepted') {
+        ticketStatus = 'accepted';
+      } else if(ticketStatus == 'resolved') {
+        ticketStatus = 'resolved';
+      } else if(ticketStatus == 'rejected') {
+        ticketStatus = 'rejected';
+      } else {
+        ticketStatus = rows[0].status;
+      }
+      const ticketQuery = `UPDATE ticket_status SET status = "${ticketStatus}" WHERE ticketID = "${ticketID}"`;
+      database.execute(ticketQuery).then(([results]) => {
+        res.redirect(`/setting`);
+      });
     });
   });
 
@@ -182,8 +300,8 @@ router.post('/register', ifLoggedin,
         });
     }),
     body('username','ชื่อผู้ใช้ไม่สามารถมีค่าว่างได้! ').trim().not().isEmpty(),
-    body('password','รหัสผ่านไม่ตรงตามรูปแบบเงื่อนไขที่กำหนดของเว็บไซต์! ').trim().matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
-    body('phone', 'Phone number does not match the format required by the website!').trim().matches(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/),
+    body('password','รหัสผ่านไม่ตรงตามรูปแบบเงื่อนไขที่กำหนด! ').trim().matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/),
+    body('phone', 'เบอร์มือถือไม่ตรงตามรูปแบบเงื่อนไขที่กำหนด!').trim().matches(/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/),
 
 ],// end of post data validation
 (req,res,next) => {
